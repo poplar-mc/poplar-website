@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  href: string;
+  tone: 'leaf' | 'ember' | 'lantern' | 'moss';
+}
+const { title, href, tone } = Astro.props;
+const tile = {
+  leaf: ['var(--leaf)', 'var(--ember)', 'var(--leaf-shade)', 'var(--leaf)'],
+  ember: ['var(--ember)', 'var(--lantern)', 'var(--leaf)', 'var(--ember)'],
+  lantern: ['var(--lantern)', 'var(--dapple)', 'var(--ember)', 'var(--lantern)'],
+  moss: ['var(--moss)', 'var(--moss-tint)', 'var(--bark)', 'var(--moss)'],
+}[tone];
+---
+
+<a
+  href={href}
+  class="block rounded-lg border-2 border-line bg-paper p-4 text-ink no-underline shadow-lift transition duration-120 ease-out hover:-translate-y-0.5 hover:shadow-block-quiet focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+>
+  <div class="mb-3 grid size-10 grid-cols-2 grid-rows-2 overflow-hidden rounded-sm" aria-hidden="true">
+    {tile.map((color) => <span style={`background: ${color}`} />)}
+  </div>
+  <p class="mt-0 mb-1 text-lg leading-[26px] font-extrabold">{title}</p>
+  <p class="m-0 text-[15px] leading-6 text-ink-muted"><slot /></p>
+</a>

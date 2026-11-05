@@ -1,0 +1,32 @@
+<button
+  type="button"
+  data-theme-toggle
+  aria-label="Dark mode"
+  class="inline-grid size-11 shrink-0 cursor-pointer place-items-center rounded-md border-2 border-line-strong bg-paper p-0 text-ink shadow-block-quiet transition duration-120 ease-out hover:bg-plank-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus active:translate-y-0.5 active:shadow-none motion-reduce:transition-none motion-reduce:active:translate-y-0"
+>
+  <svg class="hidden dark:block" aria-hidden="true" width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor"><rect x="4" width="2" height="2"></rect><rect x="4" y="8" width="2" height="2"></rect><rect y="4" width="2" height="2"></rect><rect x="8" y="4" width="2" height="2"></rect><rect x="3" y="3" width="4" height="4"></rect><rect x="1" y="1" width="1" height="1"></rect><rect x="8" y="1" width="1" height="1"></rect><rect x="1" y="8" width="1" height="1"></rect><rect x="8" y="8" width="1" height="1"></rect></svg>
+  <svg class="dark:hidden" aria-hidden="true" width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor"><rect x="3" width="4" height="1"></rect><rect x="1" y="1" width="3" height="1"></rect><rect x="1" y="2" width="2" height="5"></rect><rect y="3" width="1" height="4"></rect><rect x="2" y="7" width="6" height="1"></rect><rect x="1" y="7" width="1" height="1"></rect><rect x="3" y="8" width="5" height="1"></rect><rect x="7" y="6" width="2" height="1"></rect><rect x="8" y="5" width="2" height="1"></rect></svg>
+</button>
+
+<script>
+  // The same storage key as Starlight, so the homepage and the docs share one theme.
+  const storageKey = 'starlight-theme';
+
+  function syncButtons() {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(isDark));
+      button.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+  }
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem(storageKey, theme);
+      syncButtons();
+    });
+  });
+  syncButtons();
+</script>

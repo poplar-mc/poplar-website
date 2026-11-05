@@ -1,0 +1,390 @@
+@layer base, starlight, theme, components, utilities;
+
+@import '@astrojs/starlight-tailwind';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@theme inline {
+  --breakpoint-md: 50rem;
+
+  --color-plank-100: var(--plank-100);
+  --color-plank-200: var(--plank-200);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-leaf: var(--leaf);
+  --color-leaf-shade: var(--leaf-shade);
+  --color-on-leaf: var(--on-leaf);
+  --color-leaf-tint: var(--leaf-tint);
+  --color-ember: var(--ember);
+  --color-lantern: var(--lantern);
+  --color-on-lantern: var(--on-lantern);
+  --color-link: var(--link);
+  --color-sky-tint: var(--sky-tint);
+  --color-focus: var(--focus);
+  --color-code-bg: var(--code-bg);
+  --color-code-fg: var(--code-fg);
+
+  --font-display: "Pixelify Sans", "Nunito", system-ui, sans-serif;
+  --font-sans: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  --shadow-block: var(--pp-shadow-block);
+  --shadow-block-quiet: var(--pp-shadow-block-quiet);
+  --shadow-lift: var(--pp-shadow-lift);
+}
+
+:root,
+:root[data-theme='light'] {
+  --plank-100: #f1ece6;
+  --plank-200: #e5dfd8;
+  --paper: #fbf9f6;
+  --line: #d9cfc4;
+  --line-strong: #8a7d72;
+  --ink: #2b2530;
+  --ink-muted: #5f5560;
+  --leaf: #b3461e;
+  --leaf-shade: #7f2f14;
+  --on-leaf: #ffffff;
+  --leaf-tint: #fbe3d3;
+  --ember: #e8843a;
+  --lantern: #f0b73a;
+  --on-lantern: #2b2530;
+  --lantern-tint: #fcf0cf;
+  --bark: #a3805f;
+  --dapple: #fff4d6;
+  --moss: #4a7536;
+  --moss-tint: #e2ecd6;
+  --sky-tint: #dce9f1;
+  --link: #2f5b9a;
+  --redstone: #a3203a;
+  --redstone-tint: #f9dee3;
+  --focus: var(--link);
+  --code-bg: #1c1b1d;
+  --code-bar: #28262a;
+  --code-fg: #efe8e1;
+  --code-muted: #a096a8;
+  --pp-shadow-block: 0 3px 0 0 #7f2f14;
+  --pp-shadow-block-quiet: 0 3px 0 0 #c9bdb1;
+  --pp-shadow-lift: 0 1px 0 0 #d9cfc4, 0 10px 24px -14px rgba(43, 37, 48, 0.35);
+}
+
+:root[data-theme='dark'] {
+  --plank-100: #141312;
+  --plank-200: #1b1a19;
+  --paper: #211f1e;
+  --line: #34312f;
+  --line-strong: #86807a;
+  --ink: #f2eee9;
+  --ink-muted: #b0aaa4;
+  --leaf: #f2915f;
+  --leaf-shade: #b3461e;
+  --on-leaf: #1d1a1c;
+  --leaf-tint: #3a231a;
+  --lantern-tint: #2b2924;
+  --bark: #c09a76;
+  --moss: #a3cc85;
+  --moss-tint: #22301f;
+  --sky-tint: #1d2733;
+  --link: #9cc4f2;
+  --redstone: #ff93a3;
+  --redstone-tint: #3a1d24;
+  --focus: var(--lantern);
+  --code-bg: #0b0b0b;
+  --code-bar: #1a1918;
+  --pp-shadow-block: 0 3px 0 0 #b3461e;
+  --pp-shadow-block-quiet: 0 3px 0 0 #050505;
+  --pp-shadow-lift: 0 1px 0 0 #34312f, 0 10px 24px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Starlight reads these variables, so the docs follow the Poplar tokens in both themes. */
+:root,
+:root[data-theme='light'],
+:root[data-theme='dark'] {
+  --sl-font: var(--font-sans);
+  --sl-font-mono: var(--font-mono);
+  --sl-color-white: var(--ink);
+  --sl-color-gray-1: var(--ink);
+  --sl-color-gray-2: var(--ink);
+  --sl-color-gray-3: var(--ink-muted);
+  --sl-color-gray-4: var(--ink-muted);
+  --sl-color-gray-5: var(--line);
+  --sl-color-gray-6: var(--plank-200);
+  --sl-color-gray-7: var(--plank-100);
+  --sl-color-black: var(--paper);
+  --sl-color-text: var(--ink);
+  --sl-color-text-accent: var(--link);
+  --sl-color-text-invert: var(--on-leaf);
+  --sl-color-accent-low: var(--leaf-tint);
+  --sl-color-accent: var(--leaf);
+  --sl-color-accent-high: var(--leaf);
+  --sl-color-bg: var(--paper);
+  --sl-color-bg-nav: var(--plank-100);
+  --sl-color-bg-sidebar: var(--plank-200);
+  --sl-color-bg-inline-code: var(--sky-tint);
+  --sl-color-bg-accent: var(--leaf);
+  --sl-color-hairline: var(--line);
+  --sl-color-hairline-light: var(--line);
+  --sl-color-hairline-shade: var(--line);
+  --sl-sidebar-width: 264px;
+  --sl-content-width: 760px;
+  --sl-nav-height: 73px;
+  --sl-text-body: 17px;
+  --sl-line-height: 28px;
+  --sl-text-h1: 44px;
+  --sl-text-h2: 26px;
+  --sl-text-h3: 18px;
+}
+
+html {
+  background: var(--plank-100);
+  color: var(--ink);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.pp-canvas {
+  background-color: var(--plank-100);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .36 0 0 0 0 .4 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Header search button. Starlight shrinks it to an icon on phones, so the label is kept. */
+.docs-search site-search {
+  display: block;
+  width: 100%;
+}
+.docs-search site-search button[data-open-modal] > span {
+  display: block;
+}
+.docs-search site-search button[data-open-modal] {
+  width: 100%;
+  max-width: none;
+  min-height: 44px;
+  padding-inline: 14px 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius-md);
+}
+.docs-search site-search button[data-open-modal]:hover {
+  color: var(--ink);
+  background: var(--plank-200);
+}
+.docs-search site-search button > kbd {
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  background: var(--plank-100);
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+}
+.docs-search site-search dialog {
+  --sl-color-bg: var(--paper);
+  border-radius: var(--radius-lg);
+}
+
+/* Sidebar */
+.sidebar-content summary {
+  pointer-events: none;
+}
+.sidebar-content summary .caret {
+  display: none;
+}
+.sidebar-content .group-label .large {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.sidebar-content a {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink);
+  border-radius: var(--radius-md);
+}
+.sidebar-content a:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+  background: var(--leaf-tint);
+  color: var(--ink);
+  font-weight: 800;
+}
+
+/* Right column */
+starlight-toc h2,
+mobile-starlight-toc h2 {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+starlight-toc a {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-muted);
+}
+starlight-toc a:hover {
+  color: var(--ink);
+}
+starlight-toc a[aria-current='true'],
+starlight-toc a[aria-current='true']:hover {
+  color: var(--leaf);
+  font-weight: 700;
+}
+
+/* Article */
+h1#_top {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 50px;
+}
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  font-weight: 800;
+}
+.sl-markdown-content h2 {
+  line-height: 34px;
+}
+.sl-markdown-content h3 {
+  line-height: 26px;
+}
+.sl-markdown-content a {
+  color: var(--link);
+}
+.sl-markdown-content a:hover {
+  color: var(--ink);
+}
+.sl-markdown-content :not(pre) > code {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.9em;
+  color: var(--ink);
+  background: var(--sky-tint);
+  padding: 2px 5px;
+  border-radius: var(--radius-sm);
+}
+.sl-markdown-content table {
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 22px;
+}
+@media (min-width: 50rem) {
+  .sl-markdown-content table {
+    display: table;
+    width: 100%;
+  }
+}
+.sl-markdown-content th {
+  font-weight: 800;
+  background: var(--plank-200);
+}
+.sl-markdown-content th,
+.sl-markdown-content td {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  vertical-align: top;
+}
+.sl-markdown-content .caveats {
+  margin-top: 20px;
+  padding: 16px 20px 18px;
+  background: var(--plank-100);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.sl-markdown-content .caveats > p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.sl-markdown-content .caveats > p strong {
+  font-weight: 800;
+}
+.sl-markdown-content .caveats ul {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+/* Previous and next */
+.pagination-links a {
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+  color: var(--ink);
+}
+.pagination-links a:hover {
+  border-color: var(--leaf);
+}
+
+/* Focus */
+:where(a, button, summary):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: var(--plank-200);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 3px solid var(--plank-200);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--leaf);
+}
+.expressive-code pre::-webkit-scrollbar,
+.pp-dark-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.expressive-code pre::-webkit-scrollbar-track,
+.expressive-code pre::-webkit-scrollbar-corner,
+.pp-dark-scroll::-webkit-scrollbar-track,
+.pp-dark-scroll::-webkit-scrollbar-corner {
+  background: var(--code-bg);
+}
+.expressive-code pre::-webkit-scrollbar-thumb,
+.pp-dark-scroll::-webkit-scrollbar-thumb {
+  background: var(--code-muted);
+  border: 2px solid var(--code-bg);
+}
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-color: var(--line-strong) var(--plank-200);
+  }
+  .expressive-code pre,
+  .pp-dark-scroll {
+    scrollbar-color: var(--code-muted) var(--code-bg);
+    scrollbar-width: thin;
+  }
+}

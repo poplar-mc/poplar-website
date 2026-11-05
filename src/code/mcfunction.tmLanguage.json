@@ -1,0 +1,15 @@
+{
+  "name": "mcfunction",
+  "scopeName": "source.mcfunction",
+  "patterns": [
+    {"name": "comment.line.number-sign.mcfunction", "match": "^\\s*#.*$"},
+    {"match": "^\\s*(\\$?)([a-z_]+)", "captures": {"1": {"name": "punctuation.definition.macro.mcfunction"}, "2": {"name": "entity.name.function.command.mcfunction"}}},
+    {"name": "entity.name.function.command.mcfunction", "match": "(?<=\\brun )[a-z_]+"},
+    {"name": "string.quoted.double.mcfunction", "match": "\"(?:[^\"\\\\]|\\\\.)*\""},
+    {"name": "variable.parameter.mcfunction", "match": "\\$\\([A-Za-z_][A-Za-z0-9_]*\\)"},
+    {"name": "entity.name.tag.selector.mcfunction", "match": "@[aeprsn](?:\\[[^\\]]*\\])?"},
+    {"name": "variable.other.property.id.mcfunction", "match": "#?[a-z0-9_.-]+:[A-Za-z0-9_./-]+"},
+    {"name": "variable.language.score.mcfunction", "match": "#[A-Za-z_][A-Za-z0-9_.]*"},
+    {"name": "constant.numeric.mcfunction", "match": "(?<![A-Za-z0-9_.])-?\\d+(?:\\.\\d+)?[bBsSlLfFdD]?\\b(?:\\.\\.-?\\d*)?|\\.\\.-?\\d+"}
+  ]
+}

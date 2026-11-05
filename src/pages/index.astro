@@ -1,0 +1,250 @@
+---
+import { Code } from 'astro-expressive-code/components';
+import Button from '../components/Button.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import '../styles/global.css';
+
+const sources = import.meta.glob<string>('../poplar/examples/*/src/*.poplar', { query: '?raw', import: 'default', eager: true });
+
+const examples = [
+  { name: 'hello', file: 'main.poplar', description: 'The smallest pack: mcfun load, constants, inserts and for.' },
+  { name: 'mana', file: 'main.poplar', description: 'Per-player scores, tick with execute (as @a), onTrigger, an action bar and text().' },
+  { name: 'showoff', file: 'main.poplar', description: '/trigger showoff: NBT data, if on a data path, slice, and a compound passed with to a macro function.' },
+  { name: 'deaths', file: 'main.poplar', description: 'onEvent("deathCount", ...), entity and global scores, std random and max, title and subtitle.' },
+  { name: 'crafting', file: 'main.poplar', description: 'Data files: a recipe with an item tag, a loot table override, a predicate and an advancement reward.' },
+  { name: 'toolkit', file: 'items.poplar', description: 'Several files in one namespace, recursion, while with locals, and the string helpers.' },
+].map((example) => ({
+  ...example,
+  path: `examples/${example.name}/src/${example.file}`,
+  code: sources[`../poplar/examples/${example.name}/src/${example.file}`].trimEnd(),
+}));
+
+const heroCode = `namespace deaths;
+
+var #deaths = 0;
+
+mcfun load() {
+    onEvent("deathCount", playerDied);
+}
+
+mcfun playerDied() {
+    #deaths = #deaths + 1;
+    /tellraw @a {{["Deaths: ", text(#deaths)]}};
+}`;
+
+const manaCode = `namespace mana;
+
+var #mana = 0;
+var #maxMana = 100;
+
+mcfun tick() {
+    execute (as @a) {
+        regen();
+    }
+}
+
+// Runs as each player. @s.#mana is the player's own mana.
+mcfun regen() {
+    if (@s.#mana < #maxMana) {
+        @s.#mana = @s.#mana + 1;
+    }
+    /title @s actionbar {{["Mana: ", text(@s.#mana), "/", text(#maxMana)]}};
+}`;
+
+const errorOutput = `$ poplar check
+✗ src/main.poplar:4:21  Unknown mob_effect 'poision'. Did you mean 'poison'?
+✗ 1 error`;
+
+const inlineCode = 'rounded-sm bg-sky-tint px-[5px] py-0.5 font-mono text-[.9em] font-medium text-ink';
+const sectionHeading = 'm-0 font-display text-[40px] leading-[46px] font-semibold';
+const stepHeading = 'm-0 text-lg leading-[26px] font-extrabold';
+const bodyText = 'm-0 text-[17px] leading-7 text-ink-muted';
+const footerHeading = 'text-[13px] font-extrabold tracking-[.04em] text-ink uppercase';
+const footerLink = 'text-ink-muted no-underline hover:text-ink';
+const topLink = 'text-ink no-underline hover:text-leaf';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Poplar: a programming language for Minecraft datapacks</title>
+    <meta name="description" content="Poplar compiles to Minecraft Java datapacks. Write functions, variables, conditions, loops and events instead of raw commands." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href={import.meta.env.PUBLIC_FONTS_URL} />
+    <script is:inline>
+      const stored = localStorage.getItem('starlight-theme');
+      const theme = stored || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+    </script>
+  </head>
+  <body class="pp-canvas m-0 min-h-screen font-sans text-ink">
+    <header class="border-b border-line bg-plank-100">
+      <nav aria-label="Main" class="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-8 gap-y-4 px-4 py-3.5 md:px-8">
+        <a href="/" class="font-display text-[26px] leading-none font-semibold text-ink no-underline">Poplar</a>
+        <div class="flex grow flex-wrap items-center justify-end gap-x-6 gap-y-2 text-[15px] font-bold">
+          <a class={topLink} href="/docs/">Docs</a>
+          <a class={topLink} href="#examples">Examples</a>
+          <a class={topLink} href={import.meta.env.PUBLIC_RELEASES_URL}>Releases</a>
+          <a class={topLink} href={import.meta.env.PUBLIC_REPO_URL}>GitHub</a>
+        </div>
+        <ThemeToggle />
+      </nav>
+    </header>
+
+    <main>
+      <section id="top">
+        <div aria-hidden="true" class="grid h-2.5 grid-cols-4">
+          <div class="bg-[#E48129]"></div>
+          <div class="bg-[#AA4F21]"></div>
+          <div class="bg-[#8B3D1B]"></div>
+          <div class="bg-[#4B3B2E]"></div>
+        </div>
+        <div class="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] items-center gap-12 px-4 pt-[88px] pb-[72px] md:px-8">
+          <div class="flex flex-col items-start gap-6">
+            <h1 class="m-0 max-w-[15ch] font-display text-[clamp(40px,5vw,60px)] leading-[1.05] font-semibold tracking-[-0.01em]">A programming language for Minecraft datapacks</h1>
+            <p class="m-0 max-w-[32em] text-[19px] leading-[30px] text-ink-muted">Poplar compiles to Minecraft Java datapacks. Write functions, variables, conditions, loops and events instead of raw commands. Every command is checked when you build.</p>
+            <div class="flex flex-wrap gap-3">
+              <Button href="/docs/install/">Install Poplar</Button>
+              <Button href="/docs/" variant="secondary">Read the docs</Button>
+            </div>
+          </div>
+          <div class="min-w-0">
+            <Code code={heroCode} lang="poplar" title="src/main.poplar" />
+          </div>
+        </div>
+      </section>
+
+      <section class="border-y border-line bg-plank-200">
+        <div class="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] items-start gap-12 px-4 py-20 md:px-8">
+          <div class="flex flex-col gap-6">
+            <h2 class={sectionHeading}>How it works</h2>
+            <div class="flex flex-col gap-1.5">
+              <h3 class={stepHeading}>Functions are Minecraft functions</h3>
+              <p class={bodyText}>Every <code class={inlineCode}>mcfun</code> becomes a normal <code class={inlineCode}>.mcfunction</code> file, so other datapacks can call it with <code class={inlineCode}>/function</code>. <code class={inlineCode}>load</code> and <code class={inlineCode}>tick</code> run when the pack loads and every tick.</p>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <h3 class={stepHeading}>Variables are scores or NBT</h3>
+              <p class={bodyText}><code class={inlineCode}>#mana</code> is a scoreboard score and <code class={inlineCode}>$item</code> is NBT data. <code class={inlineCode}>@s.#mana</code> is the score of the entity running the function.</p>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <h3 class={stepHeading}>Commands are written as commands</h3>
+              <p class={bodyText}>A line that starts with <code class={inlineCode}>/</code> is a Minecraft command. <code class={inlineCode}>{'{{...}}'}</code> puts a value into it. The compiler checks it against the command tree of the target version.</p>
+            </div>
+          </div>
+          <div class="flex min-w-0 flex-col gap-4">
+            <Code code={manaCode} lang="poplar" title="src/main.poplar" />
+            <pre class="pp-dark-scroll m-0 overflow-x-auto rounded-md bg-code-bg px-4 py-3 font-mono text-[13px] leading-5 text-code-fg" aria-label="Example build error">{errorOutput}</pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="mx-auto flex max-w-[1200px] flex-col gap-10 px-4 py-[88px] md:px-8">
+        <h2 class={sectionHeading}>Features</h2>
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] gap-6">
+          <FeatureCard tone="leaf" title="Commands checked at build" href="/docs/commands/">Commands are checked against the command tree, including vanilla ids of items, blocks, effects and entities. Typos get a suggestion.</FeatureCard>
+          <FeatureCard tone="ember" title="Events and triggers" href="/docs/events/">onEvent runs a function when a scoreboard criteria counts for a player. onTrigger handles /trigger commands.</FeatureCard>
+          <FeatureCard tone="lantern" title="Standard library" href="/docs/standard-library/">Math and list functions, written in Poplar. Only the functions you use go into the pack. MIT-0 licensed.</FeatureCard>
+          <FeatureCard tone="moss" title="Language server" href="/docs/install/">poplar lsp reports errors as you type and handles hover, go to definition and completion.</FeatureCard>
+          <FeatureCard tone="leaf" title="Watch mode" href="/docs/cli/">poplar watch rebuilds on every save and copies the pack into your world's datapacks folder. Run /reload to load it.</FeatureCard>
+          <FeatureCard tone="ember" title="Data files and namespaces" href="/docs/data-files/">Declare recipes, loot tables, predicates and advancements in Poplar, and split a pack across several namespaces.</FeatureCard>
+        </div>
+      </section>
+
+      <section id="examples" class="border-y border-line bg-plank-200">
+        <div class="mx-auto flex max-w-[1200px] flex-col gap-8 px-4 py-20 md:px-8">
+          <div class="flex max-w-[720px] flex-col gap-2">
+            <h2 class={sectionHeading}>Examples</h2>
+            <p class={bodyText}>Each one is a complete project in the repository. Try one in a world with <code class={inlineCode}>{'poplar watch examples/<name> --world <world folder>'}</code>.</p>
+          </div>
+          <div role="group" aria-label="Example projects" class="flex flex-wrap gap-2">
+            {
+              examples.map((example, index) => (
+                <button
+                  type="button"
+                  data-example-tab={example.name}
+                  aria-pressed={index === 0 ? 'true' : 'false'}
+                  class="min-h-11 cursor-pointer rounded-md border-2 border-line-strong bg-paper px-4 py-2 font-mono text-[15px] leading-5 font-medium text-ink hover:bg-plank-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus aria-pressed:border-leaf aria-pressed:bg-leaf aria-pressed:text-on-leaf"
+                >
+                  {example.name}
+                </button>
+              ))
+            }
+          </div>
+          {
+            examples.map((example, index) => (
+              <div data-example-panel={example.name} hidden={index !== 0} class="flex flex-wrap items-start gap-8">
+                <div class="flex min-w-0 flex-[1_1_260px] flex-col gap-3">
+                  <h3 class="m-0 font-mono text-xl leading-7 font-medium">{example.name}</h3>
+                  <p class={bodyText}>{example.description}</p>
+                  <a class="text-[15px] font-bold text-link hover:text-ink" href={`${import.meta.env.PUBLIC_EXAMPLES_URL}/${example.name}`}>View the project on GitHub</a>
+                </div>
+                <div class="min-w-0 flex-[999_1_560px]">
+                  <Code code={example.code} lang="poplar" title={example.path} />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-[1200px] px-4 py-[88px] md:px-8">
+        <div class="flex flex-wrap items-center justify-between gap-6 rounded-lg border-2 border-line bg-paper p-6 shadow-lift md:p-12">
+          <div class="flex max-w-[560px] flex-col gap-2">
+            <h2 class={sectionHeading}>Read the documentation</h2>
+            <p class={bodyText}>The docs cover the whole language, the standard library, the CLI and what the compiled pack looks like.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <Button href="/docs/">Read the docs</Button>
+            <Button href={import.meta.env.PUBLIC_REPO_URL} variant="secondary">View on GitHub</Button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-line bg-plank-200">
+      <div class="mx-auto flex max-w-[1200px] flex-wrap justify-between gap-x-12 gap-y-6 px-4 py-10 md:px-8">
+        <div class="flex max-w-[420px] flex-col gap-2.5">
+          <span class="font-display text-[22px] font-semibold text-ink">Poplar</span>
+          <p class="m-0 text-[13px] leading-[18px] text-ink-muted">MIT licensed. The standard library is MIT-0, so packs you build with it need no license notice.</p>
+          <p class="m-0 text-[13px] leading-[18px] text-ink-muted">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+        </div>
+        <div class="flex flex-wrap gap-x-16 gap-y-8 text-[15px] leading-7">
+          <div class="flex flex-col">
+            <span class={footerHeading}>Learn</span>
+            <a class={footerLink} href="/docs/your-first-pack/">Your first pack</a>
+            <a class={footerLink} href="/docs/">Documentation</a>
+            <a class={footerLink} href="#examples">Examples</a>
+          </div>
+          <div class="flex flex-col">
+            <span class={footerHeading}>Reference</span>
+            <a class={footerLink} href="/docs/cli/">CLI</a>
+            <a class={footerLink} href="/docs/standard-library/">Standard library</a>
+            <a class={footerLink} href="/docs/pack-output/">Pack output</a>
+          </div>
+          <div class="flex flex-col">
+            <span class={footerHeading}>Project</span>
+            <a class={footerLink} href={import.meta.env.PUBLIC_REPO_URL}>GitHub</a>
+            <a class={footerLink} href={import.meta.env.PUBLIC_RELEASES_URL}>Releases</a>
+            <a class={footerLink} href={import.meta.env.PUBLIC_LICENSE_URL}>License</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const tabs = document.querySelectorAll<HTMLButtonElement>('[data-example-tab]');
+      const panels = document.querySelectorAll<HTMLElement>('[data-example-panel]');
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((other) => other.setAttribute('aria-pressed', String(other === tab)));
+          panels.forEach((panel) => {
+            panel.hidden = panel.dataset.examplePanel !== tab.dataset.exampleTab;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

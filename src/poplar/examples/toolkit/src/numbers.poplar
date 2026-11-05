@@ -1,0 +1,18 @@
+// `/trigger fib` prints the first Fibonacci numbers. `fib` calls itself; Poplar saves what each call needs.
+namespace toolkit;
+
+mcfun fib() {
+    if ($(n) < 2) {
+        return $(n);
+    }
+    return fib() with {n: $(n) - 1} + fib() with {n: $(n) - 2};
+}
+
+mcfun showFibonacci() {
+    var #i = 0;
+    while (#i <= 10) {
+        var #value = fib() with {n: #i};
+        /tellraw @s {{["fib(", text(#i), ") = ", text(#value)]}};
+        #i = #i + 1;
+    }
+}

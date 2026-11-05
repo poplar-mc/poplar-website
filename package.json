@@ -1,0 +1,23 @@
+{
+  "name": "poplar-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --force",
+    "build": "astro build --force",
+    "preview": "astro preview",
+    "check-docs": "node scripts/check-docs.mjs",
+    "sync": "node scripts/sync.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.5",
+    "@astrojs/starlight": "^0.42.8",
+    "@astrojs/starlight-tailwind": "^5.0.0",
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
+    "astro-expressive-code": "0.44.3",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.4",
+    "unist-util-visit": "^5.2.0"
+  }
+}

@@ -1,0 +1,30 @@
+---
+---
+
+<button
+  type="button"
+  popovertarget="starlight__sidebar"
+  class="docs-menu-button fixed end-(--sl-nav-pad-x) top-3.5 z-(--sl-z-index-navbar) grid size-11 cursor-pointer place-items-center rounded-md border-2 border-line-strong bg-paper p-0 text-ink shadow-block-quiet transition duration-120 ease-out hover:bg-plank-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus active:translate-y-0.5 active:shadow-none motion-reduce:transition-none motion-reduce:active:translate-y-0 md:hidden print:hidden"
+>
+  <svg class="open-menu" aria-hidden="true" width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor"><rect x="1" y="1" width="8" height="2"></rect><rect x="1" y="4" width="8" height="2"></rect><rect x="1" y="7" width="8" height="2"></rect></svg>
+  <svg class="close-menu" aria-hidden="true" width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor"><rect x="1" y="1" width="2" height="2"></rect><rect x="7" y="1" width="2" height="2"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="6" y="3" width="1" height="1"></rect><rect x="4" y="4" width="2" height="2"></rect><rect x="3" y="6" width="1" height="1"></rect><rect x="6" y="6" width="1" height="1"></rect><rect x="1" y="7" width="2" height="2"></rect><rect x="7" y="7" width="2" height="2"></rect></svg>
+  <span class="sr-only">{Astro.locals.t('menuButton.accessibleLabel')}</span>
+</button>
+
+<style>
+  button:has(~ :popover-open) .open-menu,
+  button:not(:has(~ :popover-open)) .close-menu {
+    display: none;
+  }
+</style>
+
+<style is:global>
+  body:has(#starlight__sidebar:popover-open) {
+    overflow: hidden;
+  }
+  @media (min-width: 50rem) {
+    body:has(#starlight__sidebar:popover-open) {
+      overflow: auto;
+    }
+  }
+</style>

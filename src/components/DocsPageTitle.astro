@@ -1,0 +1,9 @@
+---
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+
+const { sidebar } = Astro.locals.starlightRoute;
+const group = sidebar.find((entry) => entry.type === 'group' && entry.entries.some((item) => item.type === 'link' && item.isCurrent));
+---
+
+<p class="m-0! text-sm leading-5 text-ink-muted"><a href="/docs/" class="text-link hover:text-ink">Docs</a>{group && ` / ${group.label}`}</p>
+<Default />

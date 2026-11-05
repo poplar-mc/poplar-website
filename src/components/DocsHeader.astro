@@ -1,0 +1,18 @@
+---
+import Search from '@astrojs/starlight/components/Search.astro';
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<div class="grid h-full grid-cols-[auto_minmax(0,1fr)] items-center gap-4 md:grid-cols-[minmax(max-content,1fr)_minmax(0,440px)_minmax(max-content,1fr)] md:gap-8">
+  <a href="/" class="justify-self-start font-display text-[26px] leading-none font-semibold text-ink! no-underline">Poplar</a>
+  <div class="docs-search me-3 md:me-0">
+    <Search />
+  </div>
+  <nav aria-label="Main" class="hidden items-center justify-end gap-6 text-[15px] font-bold whitespace-nowrap md:flex print:hidden">
+    <a href="/docs/" aria-current="page" class="text-leaf! no-underline">Docs</a>
+    <a href="/#examples" class="text-ink! no-underline hover:text-leaf!">Examples</a>
+    <a href={import.meta.env.PUBLIC_RELEASES_URL} class="text-ink! no-underline hover:text-leaf!">Releases</a>
+    <a href={import.meta.env.PUBLIC_REPO_URL} class="text-ink! no-underline hover:text-leaf!">GitHub</a>
+    <ThemeToggle />
+  </nav>
+</div>
