@@ -2,6 +2,7 @@
 import { Code } from 'astro-expressive-code/components';
 import Button from '../components/Button.astro';
 import FeatureCard from '../components/FeatureCard.astro';
+import HomeMenu from '../components/HomeMenu.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/global.css';
 
@@ -63,6 +64,12 @@ const bodyText = 'm-0 text-[17px] leading-7 text-ink-muted';
 const footerHeading = 'text-[13px] font-extrabold tracking-[.04em] text-ink uppercase';
 const footerLink = 'text-ink-muted no-underline hover:text-ink';
 const topLink = 'text-ink no-underline hover:text-leaf';
+const navLinks = [
+  { label: 'Docs', href: '/docs/' },
+  { label: 'Examples', href: '#examples' },
+  { label: 'Releases', href: 'https://github.com/poplar-mc/poplar/releases', external: true },
+  { label: 'GitHub', href: 'https://github.com/poplar-mc/poplar', external: true },
+];
 ---
 
 <!doctype html>
@@ -81,16 +88,20 @@ const topLink = 'text-ink no-underline hover:text-leaf';
     </script>
   </head>
   <body class="pp-canvas m-0 min-h-screen font-sans text-ink">
-    <header class="border-b border-line bg-plank-100">
-      <nav aria-label="Main" class="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-8 gap-y-4 px-4 py-3.5 md:px-8">
+    <header class="border-b border-line bg-plank-100 max-md:sticky max-md:top-0 max-md:z-20">
+      <nav aria-label="Main" class="mx-auto flex max-w-[1200px] items-center justify-between gap-x-8 px-4 py-3.5 md:px-8">
         <a href="/" class="font-display text-[26px] leading-none font-semibold text-ink no-underline">Poplar</a>
-        <div class="flex grow flex-wrap items-center justify-end gap-x-6 gap-y-2 text-[15px] font-bold">
-          <a class={topLink} href="/docs/">Docs</a>
-          <a class={topLink} href="#examples">Examples</a>
-          <a class={topLink} href="https://github.com/poplar-mc/poplar/releases" target="_blank">Releases</a>
-          <a class={topLink} href="https://github.com/poplar-mc/poplar" target="_blank">GitHub</a>
+        <div class="hidden grow items-center justify-end gap-x-6 text-[15px] font-bold md:flex">
+          {
+            navLinks.map((link) => (
+              <a class={topLink} href={link.href} target={link.external ? '_blank' : undefined}>
+                {link.label}
+              </a>
+            ))
+          }
         </div>
-        <ThemeToggle />
+        <div class="hidden md:block"><ThemeToggle /></div>
+        <HomeMenu links={navLinks} />
       </nav>
     </header>
 
@@ -153,7 +164,7 @@ const topLink = 'text-ink no-underline hover:text-leaf';
         </div>
       </section>
 
-      <section id="examples" class="border-y border-line bg-plank-200">
+      <section id="examples" class="max-md:scroll-mt-[73px] border-y border-line bg-plank-200">
         <div class="mx-auto flex max-w-[1200px] flex-col gap-8 px-4 py-20 md:px-8">
           <div class="flex max-w-[720px] flex-col gap-2">
             <h2 class={sectionHeading}>Examples</h2>
