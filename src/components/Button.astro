@@ -4,6 +4,7 @@ interface Props {
   variant?: 'primary' | 'secondary';
 }
 const { href, variant = 'primary' } = Astro.props;
+const target = href.startsWith('http') ? '_blank' : undefined;
 const variantClass = {
   primary: 'border-transparent bg-leaf text-on-leaf shadow-block active:shadow-[0_1px_0_0_var(--leaf-shade)]',
   secondary: 'border-line-strong bg-paper text-ink shadow-block-quiet hover:bg-plank-200 active:shadow-none',
@@ -12,6 +13,7 @@ const variantClass = {
 
 <a
   href={href}
+  target={target}
   class:list={[
     'inline-flex items-center gap-2 rounded-md border-2 px-4 pt-3 pb-[11px] text-[15px] leading-5 font-extrabold tracking-[.01em] no-underline transition duration-120 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus active:translate-y-0.5 motion-reduce:transition-none motion-reduce:active:translate-y-0',
     variantClass,

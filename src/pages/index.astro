@@ -87,8 +87,8 @@ const topLink = 'text-ink no-underline hover:text-leaf';
         <div class="flex grow flex-wrap items-center justify-end gap-x-6 gap-y-2 text-[15px] font-bold">
           <a class={topLink} href="/docs/">Docs</a>
           <a class={topLink} href="#examples">Examples</a>
-          <a class={topLink} href="https://github.com/poplar-mc/poplar/releases">Releases</a>
-          <a class={topLink} href="https://github.com/poplar-mc/poplar">GitHub</a>
+          <a class={topLink} href="https://github.com/poplar-mc/poplar/releases" target="_blank">Releases</a>
+          <a class={topLink} href="https://github.com/poplar-mc/poplar" target="_blank">GitHub</a>
         </div>
         <ThemeToggle />
       </nav>
@@ -179,7 +179,7 @@ const topLink = 'text-ink no-underline hover:text-leaf';
                 <div class="flex min-w-0 flex-[1_1_260px] flex-col gap-3">
                   <h3 class="m-0 font-mono text-xl leading-7 font-medium">{example.name}</h3>
                   <p class={bodyText}>{example.description}</p>
-                  <a class="text-[15px] font-bold text-link hover:text-ink" href={`https://github.com/poplar-mc/poplar/tree/main/examples/${example.name}`}>View the project on GitHub</a>
+                  <a class="text-[15px] font-bold text-link hover:text-ink" href={`https://github.com/poplar-mc/poplar/tree/main/examples/${example.name}`} target="_blank">View the project on GitHub</a>
                 </div>
                 <div class="min-w-0 flex-[999_1_560px]">
                   <Code code={example.code} lang="poplar" title={example.path} />
@@ -226,9 +226,9 @@ const topLink = 'text-ink no-underline hover:text-leaf';
           </div>
           <div class="flex flex-col">
             <span class={footerHeading}>Project</span>
-            <a class={footerLink} href="https://github.com/poplar-mc/poplar">GitHub</a>
-            <a class={footerLink} href="https://github.com/poplar-mc/poplar/releases">Releases</a>
-            <a class={footerLink} href="https://github.com/poplar-mc/poplar/blob/main/LICENSE">License</a>
+            <a class={footerLink} href="https://github.com/poplar-mc/poplar" target="_blank">GitHub</a>
+            <a class={footerLink} href="https://github.com/poplar-mc/poplar/releases" target="_blank">Releases</a>
+            <a class={footerLink} href="https://github.com/poplar-mc/poplar/blob/main/LICENSE" target="_blank">License</a>
           </div>
         </div>
       </div>

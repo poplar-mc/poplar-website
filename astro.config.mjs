@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import { remarkCaveats } from './src/plugins/remark-caveats.mjs';
 import { remarkEnvLinks } from './src/plugins/remark-env-links.mjs';
+import { remarkExternalLinks } from './src/plugins/remark-external-links.mjs';
 
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
 const requiredEnv = [
@@ -15,7 +16,7 @@ for (const name of requiredEnv) {
 }
 
 export default defineConfig({
-  markdown: { remarkPlugins: [remarkCaveats, remarkEnvLinks(env)] },
+  markdown: { remarkPlugins: [remarkCaveats, remarkEnvLinks(env), remarkExternalLinks] },
   vite: { plugins: [tailwindcss()] },
   integrations: [
     starlight({
@@ -32,6 +33,8 @@ export default defineConfig({
         MobileMenuToggle: './src/components/MobileMenuToggle.astro',
         PageTitle: './src/components/DocsPageTitle.astro',
         Footer: './src/components/DocsFooter.astro',
+        EditLink: './src/components/DocsEditLink.astro',
+        SocialIcons: './src/components/DocsSocialIcons.astro',
       },
       sidebar: [
         {
