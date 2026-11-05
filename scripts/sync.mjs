@@ -1,12 +1,17 @@
-// Copies the example sources and the TextMate grammar from a Poplar checkout.
+// Copies the example sources from a Poplar checkout, and the TextMate grammar from a poplar-editor-extensions checkout.
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const website = resolve(import.meta.dirname, '..');
 const repo = resolve(process.env.POPLAR_REPO ?? join(website, '../poplar'));
-const grammar = join(repo, 'editors/textmate/poplar.tmLanguage.json');
-if (!existsSync(grammar)) {
+const editorsRepo = resolve(process.env.POPLAR_EDITORS_REPO ?? join(website, '../poplar-editor-extensions'));
+const grammar = join(editorsRepo, 'textmate/poplar.tmLanguage.json');
+if (!existsSync(join(repo, 'examples'))) {
   console.error(`${repo} is not a Poplar checkout. Clone it next to this repo, or set POPLAR_REPO to it.`);
+  process.exit(1);
+}
+if (!existsSync(grammar)) {
+  console.error(`${editorsRepo} is not a poplar-editor-extensions checkout. Clone it next to this repo, or set POPLAR_EDITORS_REPO to it.`);
   process.exit(1);
 }
 
@@ -21,4 +26,4 @@ for (const name of readdirSync(join(repo, 'examples'))) {
   copied++;
 }
 cpSync(grammar, join(website, 'src/code/poplar.tmLanguage.json'));
-console.log(`Copied ${copied} examples and the grammar from ${repo}`);
+console.log(`Copied ${copied} examples from ${repo}, and the grammar from ${editorsRepo}`);

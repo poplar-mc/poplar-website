@@ -22,9 +22,9 @@ Each page is a Markdown file in `src/content/docs/docs/`. A page also goes in th
 
 `bun run check-docs` compiles every `poplar` code block that starts with `namespace `. It uses the compiler in a Poplar checkout at `../poplar`, or at `POPLAR_REPO`. Run `zig build` there first.
 
-## Files from the Poplar repo
+## Files from other repos
 
-`src/poplar/examples/` and `src/code/poplar.tmLanguage.json` are copies from the Poplar repo. After a change to the examples or the grammar there, run `bun run sync` here and commit the result. It reads the same checkout as `check-docs`.
+`src/poplar/examples/` is a copy from the Poplar repo, and `src/code/poplar.tmLanguage.json` is a copy from [poplar-editor-extensions](https://github.com/poplar-mc/poplar-editor-extensions). After a change to either one, run `bun run sync` here and commit the result. It reads `../poplar` and `../poplar-editor-extensions`, or `POPLAR_REPO` and `POPLAR_EDITORS_REPO`.
 
 ## License
 
