@@ -73,7 +73,7 @@ const topLink = 'text-ink no-underline hover:text-leaf';
     <title>Poplar: a programming language for Minecraft datapacks</title>
     <meta name="description" content="Poplar compiles to Minecraft Java datapacks. Write functions, variables, conditions, loops and events instead of raw commands." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href={import.meta.env.PUBLIC_FONTS_URL} />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" />
     <script is:inline>
       const stored = localStorage.getItem('starlight-theme');
       const theme = stored || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -87,8 +87,8 @@ const topLink = 'text-ink no-underline hover:text-leaf';
         <div class="flex grow flex-wrap items-center justify-end gap-x-6 gap-y-2 text-[15px] font-bold">
           <a class={topLink} href="/docs/">Docs</a>
           <a class={topLink} href="#examples">Examples</a>
-          <a class={topLink} href={import.meta.env.PUBLIC_RELEASES_URL}>Releases</a>
-          <a class={topLink} href={import.meta.env.PUBLIC_REPO_URL}>GitHub</a>
+          <a class={topLink} href="https://github.com/poplar-mc/poplar/releases">Releases</a>
+          <a class={topLink} href="https://github.com/poplar-mc/poplar">GitHub</a>
         </div>
         <ThemeToggle />
       </nav>
@@ -179,7 +179,7 @@ const topLink = 'text-ink no-underline hover:text-leaf';
                 <div class="flex min-w-0 flex-[1_1_260px] flex-col gap-3">
                   <h3 class="m-0 font-mono text-xl leading-7 font-medium">{example.name}</h3>
                   <p class={bodyText}>{example.description}</p>
-                  <a class="text-[15px] font-bold text-link hover:text-ink" href={`${import.meta.env.PUBLIC_EXAMPLES_URL}/${example.name}`}>View the project on GitHub</a>
+                  <a class="text-[15px] font-bold text-link hover:text-ink" href={`https://github.com/poplar-mc/poplar/tree/main/examples/${example.name}`}>View the project on GitHub</a>
                 </div>
                 <div class="min-w-0 flex-[999_1_560px]">
                   <Code code={example.code} lang="poplar" title={example.path} />
@@ -198,7 +198,7 @@ const topLink = 'text-ink no-underline hover:text-leaf';
           </div>
           <div class="flex flex-wrap gap-3">
             <Button href="/docs/">Read the docs</Button>
-            <Button href={import.meta.env.PUBLIC_REPO_URL} variant="secondary">View on GitHub</Button>
+            <Button href="https://github.com/poplar-mc/poplar" variant="secondary">View on GitHub</Button>
           </div>
         </div>
       </section>
@@ -226,9 +226,9 @@ const topLink = 'text-ink no-underline hover:text-leaf';
           </div>
           <div class="flex flex-col">
             <span class={footerHeading}>Project</span>
-            <a class={footerLink} href={import.meta.env.PUBLIC_REPO_URL}>GitHub</a>
-            <a class={footerLink} href={import.meta.env.PUBLIC_RELEASES_URL}>Releases</a>
-            <a class={footerLink} href={import.meta.env.PUBLIC_LICENSE_URL}>License</a>
+            <a class={footerLink} href="https://github.com/poplar-mc/poplar">GitHub</a>
+            <a class={footerLink} href="https://github.com/poplar-mc/poplar/releases">Releases</a>
+            <a class={footerLink} href="https://github.com/poplar-mc/poplar/blob/main/LICENSE">License</a>
           </div>
         </div>
       </div>

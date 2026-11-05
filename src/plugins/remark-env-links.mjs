@@ -4,7 +4,7 @@ import { visit } from 'unist-util-visit';
 export function remarkEnvLinks(env) {
   const fill = (text) =>
     text.replace(/%(PUBLIC_[A-Z0-9_]+)%/g, (_, name) => {
-      if (!env[name]) throw new Error(`${name} is not set in website/.env. Copy it from website/.env.example`);
+      if (!env[name]) throw new Error(`${name} is not set. Copy .env.example to .env`);
       return env[name];
     });
 

@@ -6,23 +6,12 @@ import { remarkCaveats } from './src/plugins/remark-caveats.mjs';
 import { remarkEnvLinks } from './src/plugins/remark-env-links.mjs';
 
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
-const requiredLinks = [
-  'PUBLIC_REPO_URL',
-  'PUBLIC_REPO_CLONE_URL',
-  'PUBLIC_RELEASES_URL',
-  'PUBLIC_LICENSE_URL',
-  'PUBLIC_EDIT_URL',
-  'PUBLIC_EXAMPLES_URL',
+const requiredEnv = [
   'PUBLIC_INSTALL_SH_URL',
   'PUBLIC_INSTALL_PS1_URL',
-  'PUBLIC_ZIG_DOWNLOAD_URL',
-  'PUBLIC_MISODE_URL',
-  'PUBLIC_MC_WIKI_MACROS_URL',
-  'PUBLIC_MC_WIKI_CRITERIA_URL',
-  'PUBLIC_FONTS_URL',
 ];
-for (const name of requiredLinks) {
-  if (!env[name]) throw new Error(`${name} is not set in website/.env. Copy it from website/.env.example`);
+for (const name of requiredEnv) {
+  if (!env[name]) throw new Error(`${name} is not set. Copy .env.example to .env`);
 }
 
 export default defineConfig({
@@ -34,9 +23,9 @@ export default defineConfig({
       favicon: '/favicon.svg',
       credits: false,
       customCss: ['./src/styles/global.css'],
-      head: [{ tag: 'link', attrs: { rel: 'stylesheet', href: env.PUBLIC_FONTS_URL } }],
-      social: [{ icon: 'github', label: 'GitHub', href: env.PUBLIC_REPO_URL }],
-      editLink: { baseUrl: env.PUBLIC_EDIT_URL },
+      head: [{ tag: 'link', attrs: { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap' } }],
+      social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/poplar-mc/poplar' }],
+      editLink: { baseUrl: 'https://github.com/poplar-mc/poplar-website/edit/main/' },
       components: {
         Header: './src/components/DocsHeader.astro',
         ThemeSelect: './src/components/ThemeToggle.astro',

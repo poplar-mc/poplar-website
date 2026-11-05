@@ -31,7 +31,7 @@ A `.env` has `KEY=VALUE` lines, `#` comments, an optional `export ` and optional
 `update` asks GitHub for the latest release. If that release is newer, it shows it and asks before running the install script. The script runs with `POPLAR_PREFIX` set to the folder that holds this `poplar`, so the copy you run is the one it replaces:
 
 ```
-You have poplar 0.3.0. 0.4.0 is available: %PUBLIC_RELEASES_URL%/tag/v0.4.0
+You have poplar 0.3.0. 0.4.0 is available: https://github.com/poplar-mc/poplar/releases/tag/v0.4.0
 Update now? [y/N]
 ```
 

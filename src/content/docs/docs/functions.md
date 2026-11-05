@@ -31,7 +31,7 @@ Each [namespace](/docs/namespaces/) can have its own. They run in import order: 
 
 ## Macro arguments
 
-An `mcfun` has no parameter list. To take arguments, it is a [macro function](%PUBLIC_MC_WIKI_MACROS_URL%), as in Minecraft: the body reads an argument by name with `$(name)`, and the caller passes a compound with `with`:
+An `mcfun` has no parameter list. To take arguments, it is a [macro function](https://minecraft.wiki/w/Function_(Java_Edition)#Macros), as in Minecraft: the body reads an argument by name with `$(name)`, and the caller passes a compound with `with`:
 
 ```poplar
 mcfun greet() {

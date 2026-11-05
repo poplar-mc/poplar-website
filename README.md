@@ -14,7 +14,7 @@ Search only works in a build: `bun run build`, then `bun run preview`.
 
 ## Links
 
-Every external link is an env var in `.env`. Code reads it from `import.meta.env`, and a docs page writes `%PUBLIC_NAME%` in a link or code block. To add a link, put it in `.env` and `.env.example`, and add its name to `requiredLinks` in `astro.config.mjs`.
+The two install script links are env vars, `PUBLIC_INSTALL_SH_URL` and `PUBLIC_INSTALL_PS1_URL`. The install page writes them as `%PUBLIC_NAME%`, and the build fails if one is missing. Every other link is written directly in the page.
 
 ## Docs
 

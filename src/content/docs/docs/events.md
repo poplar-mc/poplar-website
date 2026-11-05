@@ -23,7 +23,7 @@ mcfun threwSnowball() {
 }
 ```
 
-`onEvent(criteria, callback)` runs the `mcfun` `callback` as a player, at the player, each time the [scoreboard criteria](%PUBLIC_MC_WIKI_CRITERIA_URL%) counts for that player. Call it in `mcfun load()` of any namespace, outside any runtime `if`, `while` or `execute`. The callback cannot use [macro arguments](/docs/functions/#macro-arguments).
+`onEvent(criteria, callback)` runs the `mcfun` `callback` as a player, at the player, each time the [scoreboard criteria](https://minecraft.wiki/w/Scoreboard#Criteria) counts for that player. Call it in `mcfun load()` of any namespace, outside any runtime `if`, `while` or `execute`. The callback cannot use [macro arguments](/docs/functions/#macro-arguments).
 
 Each event gets an objective, `<namespace>.event_<n>`, and `poplar/tick` checks it every tick:
 

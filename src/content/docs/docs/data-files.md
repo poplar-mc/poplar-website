@@ -19,7 +19,7 @@ mcfun tick() {
 }
 ```
 
-Recipes, predicates, loot tables, advancements, tags and worldgen are JSON files in a pack, and a data file declaration writes one. The type word picks the folder and the name picks the file. The body is the JSON: an object, or a list for the few types that use one (`blockTransformer`). It is written unchanged, so you can paste output from a generator such as [misode](%PUBLIC_MISODE_URL%). A string id can replace a vanilla file, such as a loot table.
+Recipes, predicates, loot tables, advancements, tags and worldgen are JSON files in a pack, and a data file declaration writes one. The type word picks the folder and the name picks the file. The body is the JSON: an object, or a list for the few types that use one (`blockTransformer`). It is written unchanged, so you can paste output from a generator such as [misode](https://misode.github.io). A string id can replace a vanilla file, such as a loot table.
 
 The example writes:
 

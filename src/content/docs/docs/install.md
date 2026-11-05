@@ -14,7 +14,7 @@ On Windows, run this in PowerShell:
 irm %PUBLIC_INSTALL_PS1_URL% | iex
 ```
 
-The script downloads the latest [release](%PUBLIC_RELEASES_URL%) for your platform and installs `poplar` with its [standard library](/docs/standard-library/). On Linux and macOS it installs to `~/.local`, and on Windows to `%LOCALAPPDATA%\Programs\poplar`. To install somewhere else, set `POPLAR_PREFIX`.
+The script downloads the latest [release](https://github.com/poplar-mc/poplar/releases) for your platform and installs `poplar` with its [standard library](/docs/standard-library/). On Linux and macOS it installs to `~/.local`, and on Windows to `%LOCALAPPDATA%\Programs\poplar`. To install somewhere else, set `POPLAR_PREFIX`.
 
 ## Update
 
@@ -26,10 +26,10 @@ Poplar comes with a language server, which you start with `poplar lsp`. It repor
 
 ## Build from source
 
-Building Poplar yourself needs [Zig 0.17.0](%PUBLIC_ZIG_DOWNLOAD_URL%):
+Building Poplar yourself needs [Zig 0.17.0](https://ziglang.org/download/):
 
 ```sh
-git clone %PUBLIC_REPO_CLONE_URL%
+git clone https://github.com/poplar-mc/poplar.git
 cd poplar/compiler
 zig build -Doptimize=ReleaseSafe -p ~/.local
 ```
