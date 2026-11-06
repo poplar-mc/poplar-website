@@ -60,7 +60,7 @@ A literal can contain game values. `$pos = [#x, #y, 0];` writes `[0,0,0]`, then 
 | `prepend($list, value)` | adds `value` at the start |
 | `insert($list, index, value)` | adds `value` at `index` |
 | `remove($list, index)` | removes the value at `index` |
-| `len(value)` | the number of elements of a list or compound, or the characters of a string |
+| `len(value)` | the number of elements of a list or compound, or the length of a string in UTF-16 units, as the game counts it (an emoji counts as 2) |
 
 `index` must be a constant integer. A score or math value is added as a `0` first, then stored into it.
 

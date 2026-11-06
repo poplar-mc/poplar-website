@@ -30,7 +30,7 @@ A variable without a sigil is a constant. It holds a number, a string, `true`, `
 
 A constant cannot hold a value from the game. `var copy = #deaths;` is an error. Use `var #copy = #deaths;` instead.
 
-Strings use double quotes. The only escapes are `\"` and `\\`.
+Strings use double quotes and stay on one line. The only escapes are `\"` and `\\`.
 
 A selector on its own, such as `@a` or `@e[type=zombie]`, is a constant string: `var everyone = @a;`.
 
