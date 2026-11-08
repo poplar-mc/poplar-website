@@ -6,9 +6,9 @@ import { join, resolve } from 'node:path';
 
 const website = resolve(import.meta.dirname, '..');
 const repo = resolve(process.env.POPLAR_REPO ?? join(website, '../poplar'));
-const poplar = join(repo, 'zig-out/bin/poplar');
+const poplar = join(repo, 'bin/poplar');
 if (!existsSync(poplar)) {
-  console.error(`${poplar} not found. Run 'zig build' in the Poplar repo, or set POPLAR_REPO to it.`);
+  console.error(`${poplar} not found. Run 'nimble build' in the Poplar repo, or set POPLAR_REPO to it.`);
   process.exit(1);
 }
 const pagesDir = join(website, 'src/content/docs/docs');

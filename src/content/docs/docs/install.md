@@ -26,12 +26,13 @@ Poplar comes with a language server, which you start with `poplar lsp`. It repor
 
 ## Build from source
 
-Building Poplar yourself needs [Zig 0.17.0](https://ziglang.org/download/):
+Building Poplar yourself needs [Nim 2.4](https://nim-lang.org/install.html):
 
 ```sh
 git clone https://github.com/poplar-mc/poplar.git
-cd poplar/compiler
-zig build -Doptimize=ReleaseSafe -p ~/.local
+cd poplar
+nim c -d:release -o:$HOME/.local/bin/poplar src/poplar.nim
+mkdir -p ~/.local/lib/poplar && cp -r std ~/.local/lib/poplar/
 ```
 
 This installs the compiler to `~/.local/bin/poplar` and the standard library to `~/.local/lib/poplar/std/`.

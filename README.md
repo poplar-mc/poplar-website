@@ -20,7 +20,7 @@ The two install script links are env vars, `PUBLIC_INSTALL_SH_URL` and `PUBLIC_I
 
 Each page is a Markdown file in `src/content/docs/docs/`. A page also goes in the `sidebar` in `astro.config.mjs`.
 
-`bun run check-docs` compiles every `poplar` code block that starts with `namespace `. It uses the compiler in a Poplar checkout at `../poplar`, or at `POPLAR_REPO`. Run `zig build` there first.
+`bun run check-docs` compiles every `poplar` code block that starts with `namespace `. It uses the compiler in a Poplar checkout at `../poplar`, or at `POPLAR_REPO`. Run `nimble build` there first.
 
 ## Files from other repos
 

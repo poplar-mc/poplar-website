@@ -43,4 +43,4 @@ Update now? [y/N]
 * The language server compiles the whole project on each change.
 * Go to definition jumps to the start of the line.
 * `poplar update` needs the network, plus `curl` and `sh` (PowerShell on Windows), as the install command does. The install scripts come from the `main` branch.
-* `poplar update` replaces the binary that you run, including a development build in `zig-out/`.
+* `poplar update` replaces the binary that you run, including one that you built from source.
