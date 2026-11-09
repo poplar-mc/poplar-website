@@ -10,7 +10,7 @@ const sources = import.meta.glob<string>('../poplar/examples/*/src/*.poplar', { 
 
 const examples = [
   { name: 'hello', file: 'main.poplar', description: 'The smallest pack: mcfun load, constants, inserts and for.' },
-  { name: 'mana', file: 'main.poplar', description: 'Per-player scores, tick with execute (as @a), onTrigger, an action bar and text().' },
+  { name: 'mana', file: 'main.poplar', description: 'Per-player scores, tick with execute as @a, onTrigger, an action bar and text().' },
   { name: 'showoff', file: 'main.poplar', description: '/trigger showoff: NBT data, if on a data path, slice, and a compound passed with to a macro function.' },
   { name: 'deaths', file: 'main.poplar', description: 'onEvent("deathCount", ...), entity and global scores, std random and max, title and subtitle.' },
   { name: 'crafting', file: 'main.poplar', description: 'Data files: a recipe with an item tag, a loot table override, a predicate and an advancement reward.' },
@@ -21,37 +21,31 @@ const examples = [
   code: sources[`../poplar/examples/${example.name}/src/${example.file}`].trimEnd(),
 }));
 
-const heroCode = `namespace deaths;
+const heroCode = `namespace deaths
 
-var #deaths = 0;
+var #deaths = 0
 
-mcfun load() {
-    onEvent("deathCount", playerDied);
-}
+mcfun load:
+    onEvent("deathCount", playerDied)
 
-mcfun playerDied() {
-    #deaths = #deaths + 1;
-    /tellraw @a {{["Deaths: ", text(#deaths)]}};
-}`;
+mcfun playerDied:
+    #deaths = #deaths + 1
+    /tellraw @a {{["Deaths: ", text(#deaths)]}}`;
 
-const manaCode = `namespace mana;
+const manaCode = `namespace mana
 
-var #mana = 0;
-var #maxMana = 100;
+var #mana = 0
+var #maxMana = 100
 
-mcfun tick() {
-    execute (as @a) {
-        regen();
-    }
-}
+mcfun tick:
+    execute as @a:
+        regen()
 
 // Runs as each player. @s.#mana is the player's own mana.
-mcfun regen() {
-    if (@s.#mana < #maxMana) {
-        @s.#mana = @s.#mana + 1;
-    }
-    /title @s actionbar {{["Mana: ", text(@s.#mana), "/", text(#maxMana)]}};
-}`;
+mcfun regen:
+    if @s.#mana < #maxMana:
+        @s.#mana = @s.#mana + 1
+    /title @s actionbar {{["Mana: ", text(@s.#mana), "/", text(#maxMana)]}}`;
 
 const errorOutput = `$ poplar check
 ✗ src/main.poplar:4:21  Unknown mob_effect 'poision'. Did you mean 'poison'?

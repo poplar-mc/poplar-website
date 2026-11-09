@@ -3,15 +3,13 @@ title: Scores
 ---
 
 ```poplar
-namespace demo;
+namespace demo
 
-var #mana = 0;
+var #mana = 0
 
-mcfun regen() {
-    if (@s.#mana < 100) {
-        @s.#mana = @s.#mana + 5;
-    }
-}
+mcfun regen:
+    if @s.#mana < 100:
+        @s.#mana = @s.#mana + 5
 ```
 
 A `#` variable is a scoreboard score: a 32-bit integer. Math wraps on overflow, and `/` and `%` round down.
@@ -27,7 +25,7 @@ Scores support `+ - * / %` and the comparisons `< <= > >= == !=`. The example ab
 execute if score @s demo.mana matches ..99 run scoreboard players add @s demo.mana 5
 ```
 
-To read an entity score, the selector must name one entity: `@s`, `@p`, `@r`, `@n`, or a selector with `limit=1`. You can write to many entities at once (`@a.#mana = 0;`).
+To read an entity score, the selector must name one entity: `@s`, `@p`, `@r`, `@n`, or a selector with `limit=1`. You can write to many entities at once (`@a.#mana = 0`).
 
 **Costs and caveats**
 

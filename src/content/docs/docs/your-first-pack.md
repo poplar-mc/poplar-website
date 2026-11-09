@@ -21,11 +21,10 @@ hello_pack/
 `src/main.poplar` has one function:
 
 ```poplar
-namespace hello_pack;
+namespace hello_pack
 
-mcfun load() {
-    /say Hello from hello_pack!;
-}
+mcfun load:
+    /say Hello from hello_pack!
 ```
 
 `mcfun load` runs every time the pack loads. `poplar build` writes the datapack to `poplar-out/hello_pack/`, and a zip of it to `poplar-out/hello_pack.zip` for sharing:

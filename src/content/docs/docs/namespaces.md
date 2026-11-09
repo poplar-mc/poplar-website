@@ -4,39 +4,36 @@ title: Namespaces
 
 ```poplar
 // src/combat.poplar
-namespace combat;
+namespace combat
 
-import magic;
+import magic
 
-var #mana = 0;
+var #mana = 0
 
-mcfun tick() {
-    magic:heal();
-    #magic:mana = #mana;
-    /execute as @a run function magic:castSpell;
-}
+mcfun tick:
+    magic:heal()
+    #magic:mana = #mana
+    /execute as @a run function magic:castSpell
 ```
 
 ```poplar
 // src/spells/magic.poplar
-namespace magic;
+namespace magic
 
-var #mana = 0;
+var #mana = 0
 
-mcfun heal() {
-    #mana = #mana + 1;
-}
+mcfun heal:
+    #mana = #mana + 1
 
-mcfun castSpell() {
-    /say whoosh;
-}
+mcfun castSpell:
+    /say whoosh
 ```
 
-Each file starts with `namespace <name>;`. Every `.poplar` file in `src/` is part of the pack, and folders don't affect the result. Files with the same namespace share their names. A plain name (`heal()`, `#mana`, `$item`) is in the file's namespace. A name in another namespace is written `magic:heal()`, `#magic:mana`, `$magic:item` or `@s.#magic:mana`, and the file must `import magic;` first.
+Each file starts with `namespace <name>`. Every `.poplar` file in `src/` is part of the pack, and folders don't affect the result. Files with the same namespace share their names. A plain name (`heal()`, `#mana`, `$item`) is in the file's namespace. A name in another namespace is written `magic:heal()`, `#magic:mana`, `$magic:item` or `@s.#magic:mana`, and the file must `import magic` first.
 
 Two namespaces can use the same names, because each has its own files and state:
 
-| In `namespace combat;` | Written as |
+| In `namespace combat` | Written as |
 |---|---|
 | `mcfun heal` | `data/combat/function/heal.mcfunction`, `combat:heal` |
 | its helpers, temps and locals | `combat:poplar/heal/...`, the objective `poplar.combat` |
@@ -54,4 +51,4 @@ A namespace name uses `a-z`, `0-9`, `_` and `.` (`bs.math`). Minecraft also allo
 
 * Each namespace adds one objective for its temps and locals, set up in `poplar/load`.
 * Renaming a namespace gives it different scores and storage. A world keeps the old values under the old name.
-* `namespace minecraft;` writes into vanilla's namespace, so it can replace vanilla functions and data. Minecraft's `load` and `tick` tags belong to Poplar, so you can't write those this way.
+* `namespace minecraft` writes into vanilla's namespace, so it can replace vanilla functions and data. Minecraft's `load` and `tick` tags belong to Poplar, so you can't write those this way.

@@ -3,19 +3,18 @@ title: Commands
 ---
 
 ```poplar
-namespace demo;
+namespace demo
 
-var #hp = 20;
-var $item = "diamond";
+var #hp = 20
+var $item = "diamond"
 
-mcfun load() {
-    /give @s diamond 1;
-    /say {{$item}} for you;
-    /say hp is {{#hp}} and double is {{#hp * 2}};
-}
+mcfun load:
+    /give @s diamond 1
+    /say {{$item}} for you
+    /say hp is {{#hp}} and double is {{#hp * 2}}
 ```
 
-A statement that starts with `/` is a Minecraft command, and it goes into the file as you wrote it. It ends at the first `;` outside quotes and brackets, so `/tellraw @a {"text":"a;b"};` is one command.
+A statement that starts with `/` is a Minecraft command, and it goes into the file as you wrote it, up to the end of its line. A `//` after a command is part of the command, so put a comment on the line above it.
 
 The compiler checks each command against the command tree of the targeted version, including literals, argument kinds and vanilla ids of items, blocks, effects and entities.
 
@@ -30,19 +29,17 @@ The compiler also checks selectors. An unknown option or an unknown `type=` id i
 ## Ids in commands
 
 ```poplar
-namespace demo;
+namespace demo
 
 predicate isSitting { "type": "minecraft:random_chance", "chance": 0.5 }
 entityTypeTag undead { "values": ["minecraft:zombie", "minecraft:skeleton"] }
 
-mcfun tick() {
-    if (predicate self:isSitting) { /function self:healPlayer; }
-    /execute as @e[type=#self:undead] run say grr;
-}
+mcfun tick:
+    if predicate self:isSitting: /function self:healPlayer
+    /execute as @e[type=#self:undead] run say grr
 
-mcfun healPlayer() {
-    /effect give @s minecraft:instant_health;
-}
+mcfun healPlayer:
+    /effect give @s minecraft:instant_health
 ```
 
 ```mcfunction
@@ -51,7 +48,7 @@ execute if predicate demo:is_sitting run function demo:heal_player
 execute as @e[type=#demo:undead] run say grr
 ```
 
-Minecraft needs a full id, `namespace:path`. In commands, `execute (...)` and conditions, refer to an `mcfun` or a [data file](/docs/data-files/) of your pack by its name in the source. Poplar gives you `self` as a helper, which the compiler converts to the namespace of the current file:
+Minecraft needs a full id, `namespace:path`. In commands, `execute` subcommands and conditions, refer to an `mcfun` or a [data file](/docs/data-files/) of your pack by its name in the source. Poplar gives you `self` as a helper, which the compiler converts to the namespace of the current file:
 
 | You write | Means |
 |---|---|
@@ -92,14 +89,13 @@ A line with a game value moves into a helper function, `poplar/<mcfun>/macro_<n>
 ## Text components
 
 ```poplar
-namespace demo;
+namespace demo
 
-var #hp = 20;
+var #hp = 20
 
-mcfun tick() {
-    /title @a actionbar {{["HP: ", text(#hp)]}};
-    /tellraw @a {text: "Hello", color: "gold"};
-}
+mcfun tick:
+    /title @a actionbar {{["HP: ", text(#hp)]}}
+    /tellraw @a {text: "Hello", color: "gold"}
 ```
 
 A text component with fixed text is plain Minecraft text, so you write it directly in the command. To show a game value, build the component in `{{...}}` with `text(value)`. This is a part that names a score or data, and the game reads the value when it shows the text:

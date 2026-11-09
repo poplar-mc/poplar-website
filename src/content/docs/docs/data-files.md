@@ -3,7 +3,7 @@ title: Data files
 ---
 
 ```poplar
-namespace demo;
+namespace demo
 
 predicate lucky { "type": "minecraft:random_chance", "chance": 0.25 }
 
@@ -14,9 +14,8 @@ lootTable "minecraft:entities/zombie" {
   "pools": [{ "rolls": 1, "entries": [{ "type": "minecraft:item", "name": "minecraft:diamond" }] }]
 }
 
-mcfun tick() {
-    if (predicate self:lucky) { /say lucky; }
-}
+mcfun tick:
+    if predicate self:lucky: /say lucky
 ```
 
 Recipes, predicates, loot tables, advancements, tags and worldgen are JSON files in a pack, and a data file declaration writes one. The type word picks the folder and the name picks the file. The body is the JSON: an object, or a list for the few types that use one (`blockTransformer`). It is written unchanged, so you can paste output from a generator such as [misode](https://misode.github.io). A string id can replace a vanilla file, such as a loot table.
@@ -37,7 +36,7 @@ The name is an identifier or a string:
 | `"checks/rare"` | `data/demo/predicate/checks/rare.json` | none; type `demo:checks/rare` |
 | `"minecraft:entities/zombie"` | `data/minecraft/loot_table/entities/zombie.json` | none; it replaces the vanilla file |
 
-In commands and conditions, refer to a data file by its name: `if (predicate self:lucky)` (see [ids in commands](/docs/commands/#ids-in-commands)). Inside JSON, write ids in full: `"#demo:handles"`, or `"demo:first_trident"` for an `mcfun firstTrident`.
+In commands and conditions, refer to a data file by its name: `if predicate self:lucky:` (see [ids in commands](/docs/commands/#ids-in-commands)). Inside JSON, write ids in full: `"#demo:handles"`, or `"demo:first_trident"` for an `mcfun firstTrident`.
 
 The type word is the folder name in camelCase. Worldgen types drop `worldgen/`, and a tag is the registry name followed by `Tag`:
 

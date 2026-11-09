@@ -3,27 +3,24 @@ title: Events
 ---
 
 ```poplar
-namespace demo;
+namespace demo
 
-import std;
+import std
 
-var #deaths = 0;
+var #deaths = 0
 
-mcfun load() {
-    onEvent("deathCount", playerDied);
-    onEvent("minecraft.used:minecraft.snowball", threwSnowball);
-}
+mcfun load:
+    onEvent("deathCount", playerDied)
+    onEvent("minecraft.used:minecraft.snowball", threwSnowball)
 
-mcfun playerDied() {
-    #deaths = #deaths + 1;
-}
+mcfun playerDied:
+    #deaths = #deaths + 1
 
-mcfun threwSnowball() {
-    /tellraw @s {text: "Nice throw"};
-}
+mcfun threwSnowball:
+    /tellraw @s {text: "Nice throw"}
 ```
 
-`onEvent(criteria, callback)` runs the `mcfun` `callback` as a player, at the player, each time the [scoreboard criteria](https://minecraft.wiki/w/Scoreboard#Criteria) counts for that player. Call it in `mcfun load()` of any namespace, outside any runtime `if`, `while` or `execute`. The callback cannot use [macro arguments](/docs/functions/#macro-arguments).
+`onEvent(criteria, callback)` runs the `mcfun` `callback` as a player, at the player, each time the [scoreboard criteria](https://minecraft.wiki/w/Scoreboard#Criteria) counts for that player. Call it in `mcfun load` of any namespace, outside any runtime `if`, `while` or `execute`. The callback cannot use [macro arguments](/docs/functions/#macro-arguments).
 
 Each event gets an objective, `<namespace>.event_<n>`, and `poplar/tick` checks it every tick:
 
@@ -31,7 +28,7 @@ Each event gets an objective, `<namespace>.event_<n>`, and `poplar/tick` checks 
 execute as @a[scores={demo.event_0=1..}] at @s run function demo:poplar/event_0
 ```
 
-`poplar/event_<n>` resets the player's score and runs the callback. If you define `mcfun tick()`, `poplar/tick` runs it after the event checks.
+`poplar/event_<n>` resets the player's score and runs the callback. If you define `mcfun tick`, `poplar/tick` runs it after the event checks.
 
 **Costs and caveats**
 
@@ -43,15 +40,13 @@ execute as @a[scores={demo.event_0=1..}] at @s run function demo:poplar/event_0
 ## Triggers
 
 ```poplar
-namespace demo;
+namespace demo
 
-mcfun load() {
-    onTrigger("showoff", show);
-}
+mcfun load:
+    onTrigger("showoff", show)
 
-mcfun show() {
-    /say I am showing off;
-}
+mcfun show:
+    /say I am showing off
 ```
 
 Every player can use `/trigger <objective>`, so datapacks use it for their own commands. `onTrigger(name, callback)` sets one up: when a player runs `/trigger showoff`, the `mcfun` `show` runs as that player, at the player. The rules are the same as for `onEvent`.
@@ -78,19 +73,18 @@ function demo:show
 ## Player events
 
 ```poplar
-namespace demo;
+namespace demo
 
-mcfun load() {
-    onFirstJoin(welcome);
-    onJoin(greet);
-    onDeath(died);
-    onRespawn(giveKit);
-}
+mcfun load:
+    onFirstJoin(welcome)
+    onJoin(greet)
+    onDeath(died)
+    onRespawn(giveKit)
 
-mcfun welcome() { /tellraw @s "Welcome to the server!"; }
-mcfun greet() { /say I joined; }
-mcfun died() { /say I died; }
-mcfun giveKit() { /give @s minecraft:bread 4; }
+mcfun welcome: /tellraw @s "Welcome to the server!"
+mcfun greet: /say I joined
+mcfun died: /say I died
+mcfun giveKit: /give @s minecraft:bread 4
 ```
 
 Poplar provides helpers for common player events, so you don't need to set up their scoreboard criteria yourself. Each one runs the callback as the player, at the player, from `poplar/tick`, with the same rules as `onEvent`:

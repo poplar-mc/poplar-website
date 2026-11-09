@@ -3,22 +3,21 @@ title: Standard library
 ---
 
 ```poplar
-namespace demo;
+namespace demo
 
-import std;
+import std
 
-var $scores = [5, 1, 4];
+var $scores = [5, 1, 4]
 
-mcfun tick() {
-    /say {{ std:sqrt() with {x: 50} }} and {{ std:sum() with {list: $scores} }};
-    std:sort() with {list: $scores};
-    $scores = $std:result;
-}
+mcfun tick:
+    /say {{ std:sqrt() with {x: 50} }} and {{ std:sum() with {list: $scores} }}
+    std:sort() with {list: $scores}
+    $scores = $std:result
 ```
 
-`import std;` loads the standard library, the namespace `std`. Call its functions like this: `std:clamp() with {x: #hp, low: 0, high: 20}`. Each one reads its [macro arguments](/docs/functions/#macro-arguments), which the tables below list as keys.
+`import std` loads the standard library, the namespace `std`. Call its functions like this: `std:clamp() with {x: #hp, low: 0, high: 20}`. Each one reads its [macro arguments](/docs/functions/#macro-arguments), which the tables below list as keys.
 
-The library is written in Poplar and installed next to the compiler (`lib/poplar/std/`), so you can read it. Only the functions your code can reach go into the pack, as a copy in the pack namespace: `std:clamp` is the function `<pack namespace>:std/clamp`, and std's data is in the storage `<pack namespace>:std`. Two packs built with different Poplar versions each have their own copy, so they can't overwrite each other. A `std:name` in a command, such as `/function std:clamp {x:5,low:0,high:3};`, counts as a use too.
+The library is written in Poplar and installed next to the compiler (`lib/poplar/std/`), so you can read it. Only the functions your code can reach go into the pack, as a copy in the pack namespace: `std:clamp` is the function `<pack namespace>:std/clamp`, and std's data is in the storage `<pack namespace>:std`. Two packs built with different Poplar versions each have their own copy, so they can't overwrite each other. A `std:name` in a command, such as `/function std:clamp {x:5,low:0,high:3}`, counts as a use too.
 
 ## Math
 
@@ -50,7 +49,7 @@ All math functions work on integers.
 
 To search for a string, use the `String` helpers. A macro argument loses its quotes, so `count` would read `"minecraft:diamond"` as `minecraft:diamond`, which isn't valid NBT. `count`, `contains` and `indexOf` are for numbers and compounds.
 
-These functions work on a copy of the list, so they never change your variable. To keep a result, copy it: `std:reverse() with {list: $names}; $names = $std:result;`.
+These functions work on a copy of the list, so they never change your variable. To keep a result, copy it with `$names = $std:result` after `std:reverse() with {list: $names}`.
 
 **Costs and caveats**
 

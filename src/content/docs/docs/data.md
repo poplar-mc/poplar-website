@@ -3,19 +3,17 @@ title: Data
 ---
 
 ```poplar
-namespace demo;
+namespace demo
 
-var $stats = {hp: 20, name: "Steve"};
-var $names = [];
-var #kills = 0;
+var $stats = {hp: 20, name: "Steve"}
+var $names = []
+var #kills = 0
 
-mcfun win() {
-    append($names, "Alex");
-    $stats.hp = #kills * 2;
-    if ($stats.name == "Steve") {
-        /say Steve is still in the lead;
-    }
-}
+mcfun win:
+    append($names, "Alex")
+    $stats.hp = #kills * 2
+    if $stats.name == "Steve":
+        /say Steve is still in the lead
 ```
 
 A `$` variable is NBT. A global is a key in the storage `<namespace>:data`, and a local is the key `<name>_<function>` in the same storage. As in the game, NBT has no declared types: a variable holds whatever you put in it, and a list can mix types.
@@ -41,16 +39,16 @@ Numbers use the same forms as Minecraft's SNBT, and suffixes can be upper or low
 `$x = ...` takes a constant, a `$` variable, entity data, a score, math or a macro argument. A copy from a `$` variable or entity data keeps its NBT type. A score or math is stored as an `int`. A macro argument goes into the command as text, so Minecraft reads its type:
 
 ```poplar
-$count = #kills * 2;            // execute store result storage demo:data count int 1 run ...
-$speed = $(speed);              // data modify storage demo:data speed set value $(speed)
-$copy = @s.$SelectedItem;       // data modify storage demo:data copy set from entity @s SelectedItem
+$count = #kills * 2             // execute store result storage demo:data count int 1 run ...
+$speed = $(speed)               // data modify storage demo:data speed set value $(speed)
+$copy = @s.$SelectedItem        // data modify storage demo:data copy set from entity @s SelectedItem
 ```
 
 ## Paths
 
 A path reaches into a compound or a list: `$stats.hp`, `$inventory[0].count`, `$names[-1]`, `$item.components."minecraft:custom_data"`. The root (`$stats`) must be declared. The rest of the path isn't checked.
 
-A literal can contain game values. `$pos = [#x, #y, 0];` writes `[0,0,0]`, then stores `#x` and `#y` into `pos[0]` and `pos[1]`.
+A literal can contain game values. `$pos = [#x, #y, 0]` writes `[0,0,0]`, then stores `#x` and `#y` into `pos[0]` and `pos[1]`.
 
 ## List functions
 
@@ -67,18 +65,16 @@ A literal can contain game values. `$pos = [#x, #y, 0];` writes `[0,0,0]`, then 
 ## Strings
 
 ```poplar
-namespace demo;
+namespace demo
 
-var $id = "";
-var #kills = 0;
+var $id = ""
+var #kills = 0
 
-mcfun inspect() {
-    $id = slice(@s.$SelectedItem.id, 10);         // "minecraft:diamond_sword" → "diamond_sword"
-    var $label = str(#kills);                     // 5 → "5"
-    if (endsWith(@s.$SelectedItem.id, "_sword")) {
-        /say a sword;
-    }
-}
+mcfun inspect:
+    $id = slice(@s.$SelectedItem.id, 10)          // "minecraft:diamond_sword" → "diamond_sword"
+    var $label = str(#kills)                      // 5 → "5"
+    if endsWith(@s.$SelectedItem.id, "_sword"):
+        /say a sword
 ```
 
 | Helper | Gives | Compiles to |
@@ -90,13 +86,13 @@ mcfun inspect() {
 
 `text` is a `$` path, entity data (`@s.$path`) or another string helper (`slice(str(#x), 1)`). `start` and `end` are constant integers, and a negative one counts from the end, so `slice($id, -3)` is the last three characters. The prefix or suffix is a constant string. If every argument is a constant, the compiler computes the result: `{{slice("minecraft:stone", 10)}}` writes `stone`.
 
-`slice` and `str` give a string, which you can store in data, pass to a function or insert with `{{...}}`. `startsWith` and `endsWith` are conditions for `if` and `while`. Minecraft has no command that joins strings, so to join them, use inserts in a command: `/data modify storage demo:data name set value "{{$first}} {{$last}}";`.
+`slice` and `str` give a string, which you can store in data, pass to a function or insert with `{{...}}`. `startsWith` and `endsWith` are conditions for `if` and `while`. Minecraft has no command that joins strings, so to join them, use inserts in a command: `/data modify storage demo:data name set value "{{$first}} {{$last}}"`.
 
 ## NBT types
 
-A number literal says its own NBT type with a suffix: `0.05f`, `1b`, `5L`. A score or math is always stored as an `int`. A float inserted into a command on its own prints as a long decimal, because Minecraft widens it: with `$x` set to `0.05f`, `/say {{$x}};` says `.050000000745058`. Inside a compound, it prints as `0.05f`.
+A number literal says its own NBT type with a suffix: `0.05f`, `1b`, `5L`. A score or math is always stored as an `int`. A float inserted into a command on its own prints as a long decimal, because Minecraft widens it: with `$x` set to `0.05f`, `/say {{$x}}` says `.050000000745058`. Inside a compound, it prints as `0.05f`.
 
-In entity data, the game converts the value to the type of the field: `@s.$Health = #hp;` gives `Health` the value `7.0f`. In storage and custom data it stays an `int`. To store a score as another type there, write the command yourself, using the objective name from [Scores](/docs/scores/):
+In entity data, the game converts the value to the type of the field: `@s.$Health = #hp` gives `Health` the value `7.0f`. In storage and custom data it stays an `int`. To store a score as another type there, write the command yourself, using the objective name from [Scores](/docs/scores/):
 
 ```mcfunction
 execute store result storage demo:data ratio float 0.05 run scoreboard players get #global demo.kills
@@ -107,7 +103,7 @@ execute store result storage demo:data ratio float 0.05 run scoreboard players g
 * Paths aren't checked. A typo like `$stats.hpp` compiles and reads nothing in the game.
 * Build-time math only works on plain whole numbers, so `0.5 + 1` is an error.
 * A comparison checks the NBT type as well as the value. `$x == 0.25d` is false if `$x` is `0.25f` or `1`.
-* `$x = $(key);` stores whatever the text parses as. A macro removes a string's quotes, so `"5"` becomes the int `5`, and Minecraft refuses the function for `"minecraft:diamond"`. For a string, write the quotes in a command: `/data modify storage demo:data x set value "$(key)";`.
+* `$x = $(key)` stores whatever the text parses as. A macro removes a string's quotes, so `"5"` becomes the int `5`, and Minecraft refuses the function for `"minecraft:diamond"`. For a string, write the quotes in a command: `/data modify storage demo:data x set value "$(key)"`.
 * In math or a number comparison, `$x` is read with `data get`, which rounds a fraction down.
 * A literal with game values costs one command for the literal, plus one for each game value.
 * Adding a game value to a list costs 2 commands. A constant, or a copy from other data, costs 1.
